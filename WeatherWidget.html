@@ -1,0 +1,39 @@
+<html lang="ru">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Weather Widget</title>
+
+        <link rel="stylesheet" href="WeatherWidget.css">
+    </head>
+
+    <body>
+        <div id="weather-widget">
+          <input type="text" id="city-input" placeholder="Введите название города">
+          <button id="search-btn">Получить Погоду</button>
+          <div id="weather-info">
+            <div id="date"></div>
+            <div id="location"></div>
+            <div id="temperature"></div>
+            <div id="description"></div>
+            <img id="weather-icon" src="" alt="Weather Icon">
+            <div id="weather-details">
+                <p id="wind-speed"></p>
+                <p id="pressure"></p>
+                <p id="humidity"></p>
+            </div>
+        </div>
+          <div id="forecast-options">
+            <button id="current-btn">Сейчас</button>
+            <button id="tomorrow-btn">Завтра</button>
+            <button id="three-days-btn">3 Дня</button>
+            <button id="week-btn">Неделя</button>
+          </div>
+        </div>
+
+        <script src="WeatherWidget.js"></script>
+    </body>
+
+</html>

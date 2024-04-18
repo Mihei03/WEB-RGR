@@ -1,0 +1,43 @@
+#weather-widget {
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    text-align: center;
+  }
+
+  #city-input {
+    width: 200px;
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+
+  #weather-info {
+    margin-top: 20px;
+  }
+
+  #location {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  #temperature {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+
+  #description {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  #weather-details {
+    margin-top: 10px;
+  }
+
+  #forecast-options {
+    margin-top: 20px;
+  }
