@@ -8,8 +8,14 @@
   max-width: 800px;
   margin: 0 auto;
   width: 800px;
-  height: 600px;
+  height: 400px;
+  max-height: 400px; /* Добавлено */
+  max-width: 800px;
   overflow: auto;
+  position: absolute; /* Добавлено */
+  top: 30%; /* Добавлено */
+  left: 50%; /* Добавлено */
+  transform: translate(-50%, -50%); /* Добавлено */
 }
 
 #city-input {
@@ -23,7 +29,6 @@
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 20px;
-  height: 480px;
   overflow: auto;
 }
 
@@ -36,10 +41,10 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   flex: 0 1 auto;
   max-width: 300px;
-  display: flex; /* Добавлено */
-  flex-direction: column; /* Добавлено */
-  justify-content: space-around; /* Добавлено */
-  align-items: center; /* Добавлено */
+  display: flex; 
+  flex-direction: column; 
+  justify-content: space-around; 
+  align-items: center; 
   word-break: break-all;
   overflow-wrap: break-word;
 }
@@ -71,13 +76,24 @@
 /* Медиа-запрос для мобильных устройств */
 @media (max-width: 767px) {
   #weather-widget {
-    width: 100%;
-    max-height: none;
-    box-sizing: border-box;
+    width: 80%;
+    max-height: none; 
+    max-width: none;
+    padding: 10px;
+    border-radius: 20px;
+    position: absolute; /* Добавлено */
+    top: auto; /* Добавлено */
+    left: 8%; /* Добавлено */
+    transform: none; /* Добавлено */
+  }
+
+  #weather-info {
+    height: auto;
+    flex-direction: column;
   }
 
   .weather-item {
-    flex: 1 1 100%;
     max-width: 100%;
+    margin: 10px 0;
   }
 }
