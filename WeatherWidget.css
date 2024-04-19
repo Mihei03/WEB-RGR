@@ -8,8 +8,8 @@
   max-width: 800px;
   margin: 0 auto;
   width: 800px;
-  height: 400px;
-  max-height: 400px; /* Добавлено */
+  height: 410px;
+  max-height: 410px; /* Добавлено */
   max-width: 800px;
   overflow: auto;
   position: absolute; /* Добавлено */
@@ -22,6 +22,7 @@
   width: 200px;
   padding: 5px;
   margin-bottom: 10px;
+  border-radius: 10px;
 }
 
 #weather-info {
@@ -30,6 +31,11 @@
   justify-content: center;
   margin-top: 20px;
   overflow: auto;
+}
+
+#current-btn, #tomorrow-btn, #three-days-btn, #search-btn {
+  font-family: 'Comic Sans MS', cursive;
+  border-radius: 10px;
 }
 
 .weather-item {
@@ -41,6 +47,8 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   flex: 0 1 auto;
   max-width: 300px;
+  min-height: 220px;
+  max-height: 220px;
   display: flex; 
   flex-direction: column; 
   justify-content: space-around; 
@@ -77,14 +85,15 @@
 @media (max-width: 767px) {
   #weather-widget {
     width: 80%;
-    max-height: none; 
+    max-height: none;
     max-width: none;
     padding: 10px;
     border-radius: 20px;
-    position: absolute; /* Добавлено */
-    top: auto; /* Добавлено */
-    left: 8%; /* Добавлено */
-    transform: none; /* Добавлено */
+    font-family: "Times New Roman", serif; /* Изменение шрифта для всего виджета */
+    position: absolute;
+    top: auto;
+    left: 8%;
+    transform: none;
   }
 
   #weather-info {
@@ -95,5 +104,9 @@
   .weather-item {
     max-width: 100%;
     margin: 10px 0;
+  }
+
+  #current-btn, #tomorrow-btn, #three-days-btn, #search-btn {
+    font-family: 'Times New Roman', serif; /* Изменение шрифта для кнопок */
   }
 }
