@@ -1,21 +1,20 @@
-const API_KEY = '160be1483cededcbe6ced1ddd0305d70';
+const API_KEY = 'acd1b700fc9b45789ec205720241904'; // Замените на ваш ключ API
 
-// Функция для получения прогноза погоды по названию города
 function getWeatherForecast(cityName = 'Новосибирск', forecast = 'current') {
     let apiUrl;
 
     switch (forecast) {
         case 'current':
-            apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}&units=metric&lang=ru`;
+            apiUrl = `http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${cityName}&lang=ru`;
             break;
         case 'tomorrow':
-            apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${API_KEY}&units=metric&lang=ru&cnt=2`;
+            apiUrl = `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${cityName}&days=2&lang=ru`;
             break;
         case 'three-days':
-            apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${API_KEY}&units=metric&lang=ru&cnt=10`;
+            apiUrl = `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${cityName}&days=3&lang=ru`;
             break;
         default:
-            apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}&units=metric&lang=ru`;
+            apiUrl = `http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${cityName}&lang=ru`;
     }
 
     fetch(apiUrl)
@@ -26,76 +25,85 @@ function getWeatherForecast(cityName = 'Новосибирск', forecast = 'cur
             return response.json();
         })
         .then(data => {
-            let location = data.city ? data.city.name : data.name;
-            const weatherData = forecast === 'current' ? [data] : data.list;
             const weatherContainer = document.getElementById('weather-info');
             weatherContainer.innerHTML = '';
 
             if (forecast === 'current') {
-                const currentWeather = weatherData[0];
+                const currentWeather = data.current;
                 displayWeatherInfo(currentWeather, 'Сейчас');
+                setBackgroundColor(currentWeather.is_day);
             } else if (forecast === 'tomorrow') {
-                const todayWeather = weatherData[0];
-                const tomorrowWeather = weatherData[1];
-                displayWeatherInfo(todayWeather, 'Сегодня', true, false); // Передаем true для showTemperature
-                displayWeatherInfo(tomorrowWeather, 'Завтра', true, false); // Передаем false для showTemperature
+                const todayWeather = data.forecast.forecastday[0];
+                const tomorrowWeather = data.forecast.forecastday[1];
+                displayWeatherInfoForDay(todayWeather, 'Сегодня', true, true);
+                displayWeatherInfoForDay(tomorrowWeather, 'Завтра', true, true);
+                setBackgroundColor(todayWeather.day.is_day);
             } else if (forecast === 'three-days') {
-                const todayWeather = weatherData[0];
-                const tomorrowWeather = weatherData[1];
-                const afterTomorrowWeather = weatherData[2];
-                displayWeatherInfo(todayWeather, 'Сегодня', true, false); // Передаем true для showTemperature
-                displayWeatherInfo(tomorrowWeather, 'Завтра', true, false); // Передаем false для showTemperature
-                displayWeatherInfo(afterTomorrowWeather, 'Послезавтра', true, false); // Передаем false для showTemperature
-            } else {
-                weatherData.forEach((item, index) => {
-                    const forecastDate = new Date(item.dt * 1000);
-                    const formattedDate = forecastDate.toLocaleDateString('ru-RU', {
-                        weekday: 'short', day: 'numeric', month: 'long', year: '2-digit', hour: 'numeric', minute: 'numeric'
-                    });
-                    displayWeatherInfo(item, formattedDate);
-                });
+                const todayWeather = data.forecast.forecastday[0];
+                const tomorrowWeather = data.forecast.forecastday[1];
+                const afterTomorrowWeather = data.forecast.forecastday[2];
+                displayWeatherInfoForDay(todayWeather, 'Сегодня', true, true);
+                displayWeatherInfoForDay(tomorrowWeather, 'Завтра', true, true);
+                displayWeatherInfoForDay(afterTomorrowWeather, 'Послезавтра', true, true);
+                setBackgroundColor(todayWeather.day.is_day);
             }
-
-            // Изменение цвета фона в зависимости от времени суток
-            const isDay = weatherData[0].weather[0].icon.includes('d');
-            document.getElementById('weather-widget').style.backgroundColor = isDay ? '#fff' : '#ccc';
         })
         .catch(error => {
-            if (error.message.includes('404')) {
-                alert(`Город "${cityName}" не найден. Пожалуйста, проверьте правильность ввода названия города.`);
-            } else {
-                console.error('Error:', error);
-                alert(`Произошла ошибка при получении данных о погоде: ${error.message}`);
-            }
+            console.error('Error:', error);
+            alert(`Произошла ошибка при получении данных о погоде: ${error.message}`);
         });
 }
 
-function displayWeatherInfo(weatherData, title, showMinMax = false, showTemperature = true) {
-    const temperature = weatherData.main.temp;
-    const description = weatherData.weather[0].description;
-    const iconCode = weatherData.weather[0].icon;
-    const windSpeed = weatherData.wind.speed;
-    const pressure = weatherData.main.pressure;
-    const humidity = weatherData.main.humidity;
-    const minTemp = weatherData.main.temp_min;
-    const maxTemp = weatherData.main.temp_max;
+function displayWeatherInfo(weatherData, title) {
+    const temperature = weatherData.temp_c;
+    const description = weatherData.condition.text;
+    const iconUrl = `http:${weatherData.condition.icon}`;
+    const windSpeed = (weatherData.wind_kph * 1000 / 3600).toFixed(1);
+    const precipitation = weatherData.precip_mm;
+    const humidity = weatherData.humidity;
 
     const weatherInfo = document.createElement('div');
     weatherInfo.className = 'weather-item';
     weatherInfo.innerHTML = `
         <div>${title}</div>
-        ${showTemperature ? `<div>${temperature} °C</div>` : ''}
+        <div>${temperature} °C</div>
         <div>${description}</div>
-        <img src="http://openweathermap.org/img/w/${iconCode}.png" alt="Weather Icon">
+        <img src="${iconUrl}" alt="Weather Icon">
         <div>Скорость ветра: ${windSpeed} м/с</div>
-        <div>Давление: ${pressure} гПа</div>
+        <div>Кол-во осадков: ${precipitation} мм</div>
         <div>Влажность: ${humidity}%</div>
-        ${showMinMax ? `<div>Max: ${minTemp} °C</div>` : ''}
-        ${showMinMax ? `<div>Min: ${maxTemp} °C</div>` : ''}
     `;
     document.getElementById('weather-info').appendChild(weatherInfo);
 }
 
+function displayWeatherInfoForDay(weatherData, title, showMinMax, showPrecipitation) {
+    const description = weatherData.day.condition.text;
+    const iconUrl = `http:${weatherData.day.condition.icon}`;
+    const windSpeed = (weatherData.day.maxwind_kph * 1000 / 3600).toFixed(1);
+    const precipitation = weatherData.day.totalprecip_mm;
+    const humidity = weatherData.day.avghumidity;
+    const minTemp = Math.round(weatherData.day.mintemp_c);
+    const maxTemp = Math.round(weatherData.day.maxtemp_c);
+
+    const weatherInfo = document.createElement('div');
+    weatherInfo.className = 'weather-item';
+    weatherInfo.innerHTML = `
+        <div>${title}</div>
+        <div>${description}</div>
+        <img src="${iconUrl}" alt="Weather Icon">
+        <div>Скорость ветра: ${windSpeed} м/с</div>
+        ${showPrecipitation ? `<div>Кол-во осадков: ${precipitation} мм</div>` : ''}
+        <div>Влажность: ${humidity}%</div>
+        ${showMinMax ? `<div>Max: ${maxTemp} °C</div>` : ''}
+        ${showMinMax ? `<div>Min: ${minTemp} °C</div>` : ''}
+    `;
+    document.getElementById('weather-info').appendChild(weatherInfo);
+}
+
+function setBackgroundColor(isDay) {
+    const weatherWidget = document.getElementById('weather-widget');
+    weatherWidget.style.backgroundColor = isDay ? '#fff' : '#ccc';
+}
 // Обработчик события для кнопки "Get Weather"
 document.getElementById('search-btn').addEventListener('click', () => {
     const cityName = document.getElementById('city-input').value;
