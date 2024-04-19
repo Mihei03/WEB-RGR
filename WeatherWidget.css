@@ -1,43 +1,83 @@
 #weather-widget {
-    width: 300px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
-    text-align: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 800px;
+  height: 600px;
+  overflow: auto;
+}
+
+#city-input {
+  width: 200px;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+#weather-info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+  height: 480px;
+  overflow: auto;
+}
+
+.weather-item {
+  margin: 10px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex: 0 1 auto;
+  max-width: 300px;
+  display: flex; /* Добавлено */
+  flex-direction: column; /* Добавлено */
+  justify-content: space-around; /* Добавлено */
+  align-items: center; /* Добавлено */
+  word-break: break-all;
+  overflow-wrap: break-word;
+}
+
+#location {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+#temperature {
+  font-size: 36px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+#description {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+#weather-details {
+  margin-top: 10px;
+}
+
+#forecast-options {
+  margin-top: 30px;
+}
+
+/* Медиа-запрос для мобильных устройств */
+@media (max-width: 767px) {
+  #weather-widget {
+    width: 100%;
+    max-height: none;
+    box-sizing: border-box;
   }
 
-  #city-input {
-    width: 200px;
-    padding: 5px;
-    margin-bottom: 10px;
+  .weather-item {
+    flex: 1 1 100%;
+    max-width: 100%;
   }
-
-  #weather-info {
-    margin-top: 20px;
-  }
-
-  #location {
-    font-size: 24px;
-    font-weight: bold;
-  }
-
-  #temperature {
-    font-size: 36px;
-    font-weight: bold;
-    margin: 10px 0;
-  }
-
-  #description {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-
-  #weather-details {
-    margin-top: 10px;
-  }
-
-  #forecast-options {
-    margin-top: 20px;
-  }
+}
