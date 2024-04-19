@@ -23,6 +23,7 @@
   padding: 5px;
   margin-bottom: 10px;
   border-radius: 10px;
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
 }
 
 #weather-info {
@@ -108,5 +109,8 @@
 
   #current-btn, #tomorrow-btn, #three-days-btn, #search-btn {
     font-family: 'Times New Roman', serif; /* Изменение шрифта для кнопок */
+  }
+  #city-input {
+    font-family: 'Times New Roman', serif;
   }
 }
