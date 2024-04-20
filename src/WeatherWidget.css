@@ -9,13 +9,13 @@
   margin: 0 auto;
   width: 800px;
   height: 410px;
-  max-height: 410px; /* Добавлено */
+  max-height: 410px; 
   max-width: 800px;
   overflow: auto;
-  position: absolute; /* Добавлено */
-  top: 30%; /* Добавлено */
-  left: 50%; /* Добавлено */
-  transform: translate(-50%, -50%); /* Добавлено */
+  position: absolute; 
+  top: 30%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
 }
 
 #city-input {
@@ -91,7 +91,7 @@
     max-width: none;
     padding: 10px;
     border-radius: 20px;
-    font-family: "Times New Roman", serif; /* Изменение шрифта для всего виджета */
+    font-family: "Times New Roman", serif; 
     position: absolute;
     top: auto;
     left: 8%;
@@ -109,7 +109,7 @@
   }
 
   #current-btn, #tomorrow-btn, #three-days-btn, #search-btn {
-    font-family: 'Times New Roman', serif; /* Изменение шрифта для кнопок */
+    font-family: 'Times New Roman', serif; 
   }
   #city-input {
     font-family: 'Times New Roman', serif;

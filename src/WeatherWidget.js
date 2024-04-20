@@ -129,33 +129,76 @@ function setBackgroundColor() {
     }
   }
 
+function createWeatherWidget() {
+    const weatherWidget = document.createElement('div');
+    weatherWidget.id = 'weather-widget';
+
+    const cityInput = document.createElement('input');
+    cityInput.type = 'text';
+    cityInput.id = 'city-input';
+    cityInput.placeholder = 'Введите название города';
+    cityInput.value = 'Новосибирск';
+
+    const searchBtn = document.createElement('button');
+    searchBtn.id = 'search-btn';
+    searchBtn.textContent = 'Получить Погоду';
+
+    const weatherInfo = document.createElement('div');
+    weatherInfo.id = 'weather-info';
+
+    const forecastOptions = document.createElement('div');
+    forecastOptions.id = 'forecast-options';
+
+    const currentBtn = document.createElement('button');
+    currentBtn.id = 'current-btn';
+    currentBtn.textContent = 'Сейчас';
+
+    const tomorrowBtn = document.createElement('button');
+    tomorrowBtn.id = 'tomorrow-btn';
+    tomorrowBtn.textContent = '2 дня';
+
+    const threeDaysBtn = document.createElement('button');
+threeDaysBtn.id = 'three-days-btn';
+threeDaysBtn.textContent = '3 Дня';
+
+weatherWidget.appendChild(cityInput);
+weatherWidget.appendChild(searchBtn);
+weatherWidget.appendChild(weatherInfo);
+forecastOptions.appendChild(currentBtn);
+forecastOptions.appendChild(tomorrowBtn);
+forecastOptions.appendChild(threeDaysBtn);
+weatherWidget.appendChild(forecastOptions);
+
+document.body.appendChild(weatherWidget);
+
 // Обработчик события для кнопки "Get Weather"
-document.getElementById('search-btn').addEventListener('click', () => {
-    const cityName = document.getElementById('city-input').value;
+searchBtn.addEventListener('click', () => {
+    const cityName = cityInput.value;
     getWeatherForecast(cityName);
 });
 
 // Обработчики событий для кнопок выбора прогноза
-document.getElementById('current-btn').addEventListener('click', () => {
-    const cityName = document.getElementById('city-input').value;
+currentBtn.addEventListener('click', () => {
+    const cityName = cityInput.value;
     getWeatherForecast(cityName, 'current');
 });
 
-document.getElementById('tomorrow-btn').addEventListener('click', () => {
-    const cityName = document.getElementById('city-input').value;
+tomorrowBtn.addEventListener('click', () => {
+    const cityName = cityInput.value;
     getWeatherForecast(cityName, 'tomorrow');
 });
 
-document.getElementById('three-days-btn').addEventListener('click', () => {
-    const cityName = document.getElementById('city-input').value;
+threeDaysBtn.addEventListener('click', () => {
+    const cityName = cityInput.value;
     getWeatherForecast(cityName, 'three-days');
 });
+}
 
-// Получение прогноза погоды для Новосибирска при загрузке страницы
-window.onload = function() {
+document.addEventListener('DOMContentLoaded', function() {
+    createWeatherWidget();
     setBackgroundColor();
     getWeatherForecast();
 
     // Обновление цвета фона каждую минуту
-    setInterval(setBackgroundByTime, 60000);
-};
+    setInterval(setBackgroundColor, 60000);
+});
