@@ -26,7 +26,7 @@ function getWeatherForecast(cityName = 'Новосибирск', forecast = 'cur
     fetch(apiUrl)
         .then(response => {
             if (!response.ok) {
-                throw new Error(`${response.status} ${response.statusText}`);
+                throw new Error(`Ошибка HTTP: ${response.status}`);
             }
             return response.json();
         })
@@ -55,8 +55,16 @@ function getWeatherForecast(cityName = 'Новосибирск', forecast = 'cur
             }
         })
         .catch(error => {
-            console.error('Error:', error);
-            alert(`Произошла ошибка при получении данных о погоде: ${error.message}`);
+            console.error('Ошибка:', error);
+            if (error.message.includes('HTTP: 400')) {
+                alert('Пожалуйста, введите действительное название города.');
+            } else if (error.message.includes('HTTP')) {
+                alert(`Произошла ошибка при получении данных о погоде: ${error.message}`);
+            } else if (error.message.includes('Превышен лимит запросов')) {
+                alert('Превышен лимит запросов к API погоды. Попробуйте позже.');
+            } else {
+                alert(`Произошла неизвестная ошибка: ${error.message}`);
+            }
         });
 }
 
