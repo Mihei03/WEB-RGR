@@ -37,6 +37,7 @@
 #current-btn, #tomorrow-btn, #three-days-btn, #search-btn {
   font-family: 'Comic Sans MS', cursive;
   border-radius: 10px;
+  background-color: #00d9ff;
 }
 
 .weather-item {
@@ -44,7 +45,7 @@
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 25px;
-  background-color: #f9f9f9;
+  background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   flex: 0 1 auto;
   max-width: 300px;
