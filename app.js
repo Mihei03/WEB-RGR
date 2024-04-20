@@ -6,8 +6,3 @@ window.addEventListener('DOMContentLoaded', () => {
       document.getElementById('app').innerHTML = widgetHTML;
     });
   });
-
-
-
-
-  
