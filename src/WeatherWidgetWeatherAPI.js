@@ -73,7 +73,7 @@ function displayWeatherInfo(weatherData, title) {
     const description = weatherData.condition.text;
     const iconUrl = `http:${weatherData.condition.icon}`;
     const windSpeed = (weatherData.wind_kph * 1000 / 3600).toFixed(1);
-    const precipitation = weatherData.precip_mm;
+    const precipitation = weatherData.precip_mm || 0; // Использование 0, если precip_mm не предоставлено
     const humidity = weatherData.humidity;
 
     const weatherInfo = document.createElement('div');
@@ -84,7 +84,7 @@ function displayWeatherInfo(weatherData, title) {
         <div>${description}</div>
         <img src="${iconUrl}" alt="Weather Icon">
         <div>Скорость ветра: ${windSpeed} м/с</div>
-        <div>Кол-во осадков: ${precipitation} мм</div>
+        <div>Количество осадков: ${precipitation} мм</div>
         <div>Влажность: ${humidity}%</div>
     `;
     document.getElementById('weather-info').appendChild(weatherInfo);
@@ -94,7 +94,7 @@ function displayWeatherInfoForDay(weatherData, title, showMinMax, showPrecipitat
     const description = weatherData.day.condition.text;
     const iconUrl = `http:${weatherData.day.condition.icon}`;
     const windSpeed = (weatherData.day.maxwind_kph * 1000 / 3600).toFixed(1);
-    const precipitation = weatherData.day.totalprecip_mm;
+    const precipitation = weatherData.day.totalprecip_mm || 0; // Использование 0, если totalprecip_mm не предоставлено
     const humidity = weatherData.day.avghumidity;
     const minTemp = Math.round(weatherData.day.mintemp_c);
     const maxTemp = Math.round(weatherData.day.maxtemp_c);
@@ -106,7 +106,7 @@ function displayWeatherInfoForDay(weatherData, title, showMinMax, showPrecipitat
         <div>${description}</div>
         <img src="${iconUrl}" alt="Weather Icon">
         <div>Скорость ветра: ${windSpeed} м/с</div>
-        ${showPrecipitation ? `<div>Кол-во осадков: ${precipitation} мм</div>` : ''}
+        ${showPrecipitation ? `<div>Количество осадков: ${precipitation} мм</div>` : ''}
         <div>Влажность: ${humidity}%</div>
         ${showMinMax ? `<div>Max: ${maxTemp} °C</div>` : ''}
         ${showMinMax ? `<div>Min: ${minTemp} °C</div>` : ''}
